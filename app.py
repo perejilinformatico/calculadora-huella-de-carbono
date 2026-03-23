@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import requests
 
 app = Flask(__name__)
 
@@ -34,6 +35,23 @@ def index():
 
     return render_template("index.html", resultado=resultado)
 
+@app.route('/ai', methods=['GET', 'POST'])
+def ai_advice():
+    advice = None
+    if request.method == 'POST':
+        total = float(request.form.get('total', 0))
+        prompt = f"Basado en una huella de carbono de {total} toneladas al año, dame consejos para reducirla."
+        try:
+            # Simular respuesta de IA gratuita sin API externa
+            if total < 5:
+                advice = "¡Excelente! Tu huella de carbono es baja. Sigue manteniendo hábitos sostenibles como usar transporte público, reciclar y reducir el consumo de carne."
+            elif total < 10:
+                advice = "Tu huella está en un nivel moderado. Considera reducir vuelos, optimizar el uso de electricidad y elegir alimentos con menor impacto ambiental."
+            else:
+                advice = "Tu huella es alta. Prioriza reducir viajes en avión, cambiar a energías renovables, disminuir el consumo de carne roja y promover el transporte sostenible."
+        except Exception as e:
+            advice = f"Error al obtener consejo de IA: {str(e)}"
+    return render_template('ai.html', advice=advice)
 
 if __name__ == "__main__":
     app.run(debug=True)
