@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Huella de Carbono</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --verde-oscuro: #1b4332;
+      --verde-medio: #2d6a4f;
+      --verde-claro: #40916c;
+      --verde-suave: #95d5b2;
+      --verde-muy-claro: #d8f3dc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--verde-muy-claro) 0%, #e8f5e9 100%);
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar-custom {
+      background: linear-gradient(90deg, var(--verde-oscuro) 0%, var(--verde-medio) 100%);
+      box-shadow: 0 4px 15px rgba(27, 67, 50, 0.2);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: white !important;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      letter-spacing: -1px;
+    }
+
+    .navbar-brand i {
+      font-size: 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--verde-oscuro) 0%, var(--verde-medio) 100%);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      position: relative;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    /* Form Container */
+    .form-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(27, 67, 50, 0.15);
+      margin: -80px auto 3rem;
+      padding: 3rem;
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2.5rem 0 1.5rem 0;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid var(--verde-claro);
+    }
+
+    .section-header i {
+      font-size: 1.8rem;
+      color: var(--verde-claro);
+    }
+
+    .section-header h3 {
+      margin: 0;
+      color: var(--verde-oscuro);
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .section-header:first-of-type {
+      margin-top: 0;
+    }
+
+    /* Form Groups */
+    .form-group-custom {
+      margin-bottom: 1.3rem;
+    }
+
+    .form-label-custom {
+      display: block;
+      color: var(--verde-oscuro);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .form-control-custom,
+    select.form-control-custom {
+      width: 100%;
+      padding: 0.9rem 1.1rem;
+      border: 2px solid var(--verde-suave);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      background-color: #fafafa;
+    }
+
+    .form-control-custom:focus,
+    select.form-control-custom:focus {
+      border-color: var(--verde-claro);
+      background-color: white;
+      box-shadow: 0 0 12px rgba(64, 145, 108, 0.3);
+      outline: none;
+    }
+
+    /* Buttons */
+    .btn-calcular {
+      background: linear-gradient(90deg, var(--verde-claro) 0%, var(--verde-suave) 100%);
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 1.1rem 3rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      width: 100%;
+      margin-top: 2rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(64, 145, 108, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+    }
+
+    .btn-calcular:hover {
+      background: linear-gradient(90deg, var(--verde-oscuro) 0%, var(--verde-claro) 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(27, 67, 50, 0.4);
+      color: white;
+    }
+
+    .btn-calcular:active {
+      transform: translateY(-1px);
+    }
+
+    /* Resultado */
+    .resultado-container {
+      background: linear-gradient(135deg, var(--verde-muy-claro) 0%, #e8f5e9 100%);
+      border-left: 5px solid var(--verde-claro);
+      border-radius: 15px;
+      padding: 2.5rem;
+      margin-top: 3rem;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .resultado-titulo {
+      color: var(--verde-oscuro);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .resultado-titulo i {
+      color: var(--verde-claro);
+      font-size: 1.8rem;
+    }
+
+    .resultado-total {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--verde-claro);
+      margin: 1.5rem 0;
+      text-shadow: 2px 2px 4px rgba(27, 67, 50, 0.1);
+    }
+
+    .resultado-nivel {
+      font-size: 1.1rem;
+      color: var(--verde-oscuro);
+      font-weight: 600;
+      padding: 1rem;
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .desglose-titulo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--verde-oscuro);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .desglose-titulo i {
+      color: var(--verde-claro);
+    }
+
+    .fila-desglose {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(27, 67, 50, 0.1);
+    }
+
+    .fila-desglose:last-child {
+      border-bottom: none;
+    }
+
+    .fila-etiqueta {
+      color: var(--verde-oscuro);
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .fila-valor {
+      color: var(--verde-claro);
+      font-weight: 700;
+      font-size: 0.95rem;
+      min-width: 100px;
+      text-align: right;
+    }
+
+    .barra-contenedor {
+      background: rgba(27, 67, 50, 0.1);
+      border-radius: 8px;
+      height: 18px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .barra {
+      height: 100%;
+      background: linear-gradient(90deg, var(--verde-claro) 0%, var(--verde-suave) 100%);
+      border-radius: 8px;
+      transition: width 0.6s ease;
+      box-shadow: 0 2px 8px rgba(64, 145, 108, 0.3);
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(90deg, var(--verde-oscuro) 0%, var(--verde-medio) 100%);
+      color: white;
+      padding: 2.5rem 0;
+      text-align: center;
+      border-top: 3px solid var(--verde-claro);
+      margin-top: 4rem;
+    }
+
+    .footer p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .footer i {
+      color: #ff6b6b;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .form-container {
+        margin: -60px auto 2rem;
+        padding: 2rem 1.5rem;
+      }
+
+      .resultado-total {
+        font-size: 2.5rem;
+      }
+
+      .btn-calcular {
+        padding: 0.95rem 2rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark navbar-custom">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <i class="bi bi-leaf"></i> 
+      <span>Huella Carbono</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1><i class="bi bi-globe"></i> Calculadora de Huella de Carbono</h1>
+    <p>Descubre tu impacto ambiental y aprende cómo reducirlo</p>
+  </div>
+</section>
+
+<!-- Form Container -->
+<div class="container">
+  <div class="form-container">
+    <form method="POST">
+      <!-- Transporte -->
+      <div class="section-header">
+        <i class="bi bi-car-front"></i>
+        <h3>Transporte</h3>
+      </div>
+      
+      <div class="form-group-custom">
+        <label class="form-label-custom"><i class="bi bi-car-side"></i> Km en auto por semana</label>
+        <input type="number" name="auto_km_semana" value="150" min="0" class="form-control-custom">
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom"><i class="bi bi-airplane"></i> Vuelos cortos por año (&lt;3h)</label>
+        <input type="number" name="vuelos_cortos" value="2" min="0" class="form-control-custom">
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom"><i class="bi bi-airplane-engines"></i> Vuelos largos por año (&gt;3h)</label>
+        <input type="number" name="vuelos_largos" value="1" min="0" class="form-control-custom">
+      </div>
+
+      <!-- Hogar -->
+      <div class="section-header">
+        <i class="bi bi-house-fill"></i>
+        <h3>Hogar</h3>
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom"><i class="bi bi-lightning-fill"></i> Electricidad (kWh/mes)</label>
+        <input type="number" name="electricidad" value="300" min="0" class="form-control-custom">
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom"><i class="bi bi-fire"></i> Gas natural (m³/mes)</label>
+        <input type="number" name="gas_m3" value="30" min="0" class="form-control-custom">
+      </div>
+
+      <!-- Dieta -->
+      <div class="section-header">
+        <i class="bi bi-Apple"></i>
+        <h3>Dieta</h3>
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom"><i class="bi bi-egg-fried"></i> Porciones de carne roja por semana</label>
+        <input type="number" name="carne_roja" value="4" min="0" class="form-control-custom">
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom"><i class="bi bi-egg"></i> Porciones de pollo/pescado por semana</label>
+        <input type="number" name="pollo" value="5" min="0" class="form-control-custom">
+      </div>
+
+      <button type="submit" class="btn-calcular">
+        <i class="bi bi-play-circle"></i> Calcular Huella
+      </button>
+    </form>
+
+    <!-- Resultado -->
+    {% if resultado %}
+    <div class="resultado-container">
+      <div class="resultado-titulo">
+        <i class="bi bi-check-circle"></i>
+        Tu Huella de Carbono
+      </div>
+
+      <div class="resultado-nivel">
+        {{ resultado.nivel[1] }}
+      </div>
+
+      <div class="resultado-total">{{ resultado.total }} ton CO₂/año</div>
+
+      <div class="resultado-nivel" style="background: var(--verde-muy-claro); border-left: 4px solid var(--verde-claro);">
+        <strong>{{ resultado.nivel[0] }}</strong>
+      </div>
+
+      <div class="desglose-titulo">
+        <i class="bi bi-bar-chart"></i>
+        Desglose por Categoría
+      </div>
+
+      {% set nombres = {
+        "auto_km_semana": "Auto",
+        "vuelos_cortos": "Vuelos cortos",
+        "vuelos_largos": "Vuelos largos",
+        "electricidad": "Electricidad",
+        "gas_m3": "Gas",
+        "carne_roja": "Carne roja",
+        "pollo": "Pollo/pescado"
+      } %}
+
+      {% for k, v in resultado.parciales.items() %}
+        {% set pct = (v / resultado.total * 100) | round | int if resultado.total > 0 else 0 %}
+        <div class="fila-desglose">
+          <span class="fila-etiqueta">{{ nombres[k] }}</span>
+          <span class="fila-valor">{{ "%.2f"|format(v) }} t ({{ pct }}%)</span>
+        </div>
+        <div class="barra-contenedor">
+          <div class="barra" style="width: {{ pct }}%"></div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2026 Calculadora de Huella de Carbono | Hecho con <i class="bi bi-heart-fill"></i> para el planeta</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
