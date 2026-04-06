@@ -30,4 +30,4 @@ Esta calculadora permite a los usuarios:
 
 1. Clonar el repositorio:
 ```bash
-git clone https://github.com/TU-USUARIO/TU-REPO.git
+git clone https://github.com/perejilinformatico/calculadora-huella-de-carbono.git
