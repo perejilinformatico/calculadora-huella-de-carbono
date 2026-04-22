@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests
+import random
 
 app = Flask(__name__)
 
@@ -40,17 +41,35 @@ def ai_advice():
     advice = None
     if request.method == 'POST':
         total = float(request.form.get('total', 0))
-        prompt = f"Basado en una huella de carbono de {total} toneladas al año, dame consejos para reducirla."
+
         try:
-            # Simular respuesta de IA gratuita sin API externa
             if total < 5:
-                advice = "¡Excelente! Tu huella de carbono es baja. Sigue manteniendo hábitos sostenibles como usar transporte público, reciclar y reducir el consumo de carne."
+                consejos = [
+                    "¡Excelente! Tu huella es baja. Sigue usando transporte público.",
+                    "Vas muy bien 🌿. Mantén hábitos como reciclar y reducir residuos.",
+                    "Buen trabajo. Podés mejorar aún más usando energías renovables."
+                ]
             elif total < 10:
-                advice = "Tu huella está en un nivel moderado. Considera reducir vuelos, optimizar el uso de electricidad y elegir alimentos con menor impacto ambiental."
+                consejos = [
+                    "Podés reducir vuelos y optimizar el uso de electricidad.",
+                    "Intentá consumir menos carne roja y más opciones sostenibles.",
+                    "Usar bici o transporte público puede bajar tu huella bastante."
+                ]
             else:
-                advice = "Tu huella es alta. Prioriza reducir viajes en avión, cambiar a energías renovables, disminuir el consumo de carne roja y promover el transporte sostenible."
+                consejos = [
+                    "Reducí viajes en avión ✈️ y priorizá transporte sostenible.",
+                    "Cambiá a energías renovables y bajá el consumo eléctrico.",
+                    "Disminuí el consumo de carne roja 🥩.",
+                    "Optá por transporte público o compartido 🚗."
+                ]
+
+            # Elegir uno aleatorio
+            index = random.randint(0, len(consejos) - 1)
+            advice = consejos[index]
+
         except Exception as e:
-            advice = f"Error al obtener consejo de IA: {str(e)}"
+            advice = f"Error al obtener consejo: {str(e)}"
+
     return render_template('ai.html', advice=advice)
 
 if __name__ == "__main__":
