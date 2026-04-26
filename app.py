@@ -47,22 +47,21 @@ def ai_advice():
         try:
             if total < 5:
                 consejos = [
-                    "¡Excelente! Tu huella es baja. Sigue usando transporte público.",
-                    "Vas muy bien 🌿. Mantén hábitos como reciclar y reducir residuos.",
-                    "Buen trabajo. Podés mejorar aún más usando energías renovables."
+                  "Vas excelente 🌿 Tu huella de carbono está por debajo del promedio global. Esto significa que tus hábitos actuales ya tienen un impacto positivo. Aun así, podés mejorar aún más priorizando productos locales, reduciendo desperdicios y manteniendo el uso eficiente de energía en tu hogar.",
+                  "Tu estilo de vida es bastante sostenible. Seguir usando transporte público, bicicleta o caminatas no solo mantiene baja tu huella, sino que también reduce contaminación urbana. Si querés optimizar aún más, podés revisar tu consumo energético en dispositivos electrónicos y reducir el uso innecesario en standby.",
+                  "Estás en un buen camino ecológico 🌱 Podés reforzar tus hábitos eligiendo alimentos de menor impacto ambiental, evitando desperdicios de comida y reutilizando materiales cuando sea posible. Pequeños ajustes pueden hacer que tu huella sea aún más baja sin cambiar tu estilo de vida."
                 ]
             elif total < 10:
                 consejos = [
-                    "Podés reducir vuelos y optimizar el uso de electricidad.",
-                    "Intentá consumir menos carne roja y más opciones sostenibles.",
-                    "Usar bici o transporte público puede bajar tu huella bastante."
+                  "Tu huella está cerca del promedio global ⚠️ Esto significa que hay oportunidades claras de mejora. Reducir el consumo de carne roja, optimizar el uso de electricidad en el hogar y disminuir viajes innecesarios en vehículo privado puede bajar significativamente tu impacto ambiental anual.",
+                  "Podés mejorar bastante tu impacto ambiental con cambios simples pero constantes. Por ejemplo: usar más transporte público o bicicleta algunos días a la semana, reducir el consumo de productos de alta huella como carne roja, y elegir electrodomésticos eficientes energéticamente.",
+                  "Estás en una zona intermedia 🌍 Para avanzar hacia un estilo de vida más sostenible, intentá planificar mejor tus desplazamientos para reducir viajes cortos en auto, moderar el consumo de energía en horas pico y aumentar el consumo de alimentos vegetales."
                 ]
             else:
                 consejos = [
-                    "Reducí viajes en avión ✈️ y priorizá transporte sostenible.",
-                    "Cambiá a energías renovables y bajá el consumo eléctrico.",
-                    "Disminuí el consumo de carne roja 🥩.",
-                    "Optá por transporte público o compartido 🚗."
+                   "Tu huella de carbono es elevada 🔴 Esto suele estar relacionado con transporte frecuente en avión, alto consumo energético o una dieta con mucha carne roja. Reducir incluso parcialmente estos factores puede generar una disminución significativa en tu impacto anual.",
+                   "Actualmente tu impacto ambiental supera el promedio global. Podés empezar priorizando cambios importantes como reducir vuelos de corta distancia, optar por transporte compartido o público, y revisar tu consumo energético en el hogar para identificar desperdicios.",
+                   "Tu estilo de vida tiene un impacto alto en emisiones 🌍 Cambiar algunos hábitos clave puede hacer una gran diferencia: disminuir el consumo de carne roja, optimizar el uso de electricidad y reducir el uso de transporte individual motorizado. No hace falta cambiar todo de golpe, pero sí empezar por lo más pesado en emisiones."
                 ]
 
             # Elegir uno aleatorio
