@@ -1,10 +1,8 @@
 from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
 import requests
 import random
 
 app = Flask(__name__)
-CORS(app)
 
 # Factores de emisión (kg CO2 por unidad)
 FACTORES = {
