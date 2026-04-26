@@ -69,4 +69,4 @@ def ai_advice():
     return render_template('ai.html', advice=advice)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
