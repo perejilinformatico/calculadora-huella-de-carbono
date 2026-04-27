@@ -381,12 +381,12 @@
       </div>
 
       <div class="form-group-custom">
-        <label class="form-label-custom"><i class="bi bi-airplane"></i> Vuelos cortos por año (&lt;3h)</label>
+        <label class="form-label-custom"><i class="bi bi-airplane"></i> Vuelos cortos por año (<3h)</label>
         <input type="number" name="vuelos_cortos" value="2" min="0" class="form-control-custom">
       </div>
 
       <div class="form-group-custom">
-        <label class="form-label-custom"><i class="bi bi-airplane-engines"></i> Vuelos largos por año (&gt;3h)</label>
+        <label class="form-label-custom"><i class="bi bi-airplane-engines"></i> Vuelos largos por año (>3h)</label>
         <input type="number" name="vuelos_largos" value="1" min="0" class="form-control-custom">
       </div>
 
@@ -470,10 +470,12 @@
           <div class="barra" style="width: {{ pct }}%"></div>
         </div>
       {% endfor %}
+
+      <h3 class="text-center mt-5">Si deseas recomendaciones para mejorar</h3>
+      <a class="btn-calcular" style="text-decoration: none; margin-top: 1rem;" href="/ai">
+        <i class="bi bi-lightbulb"></i> Ver Recomendaciones Personalizadas
+      </a>
     </div>
-    <h3 class="text-center mt-5">Si deseas recomendaciones para mejorar</h3>
-      <a class="btn-calcular" style="text-decoration: none;" href="/ai">¡Toca Aqui!
-    </a>
     {% endif %}
   </div>
 </div>
